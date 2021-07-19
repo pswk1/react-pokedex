@@ -6,6 +6,7 @@ import { Typography } from '@material-ui/core';
 import { MuiThemeProvider, createTheme } from '@material-ui/core/styles';
 
 const theme = createTheme({
+	spacing:  8,
 	typography: {
 		h1: {
 			fontFamily: 'Montserrat',
@@ -21,7 +22,7 @@ const theme = createTheme({
 function App() {
 	const [pokeData, setPokeData] = useState([]);
 	const getPokemon = async () => {
-		const original = 151;
+		const original = 5;
 		let pokemons = [];
 
 		for (let id = 1; id <= original; id++) {
