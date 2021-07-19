@@ -5,6 +5,4 @@ body {
   height: 100vh;
 	width: 100vw;
 	background: #6082B6;
-  /* overflow-x: hidden; */
-  overflow: hidden;
 }

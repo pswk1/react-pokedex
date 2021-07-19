@@ -8,8 +8,9 @@ import { MuiThemeProvider, createTheme } from '@material-ui/core/styles';
 const theme = createTheme({
 	spacing:  8,
 	typography: {
+		fontFamily: 'Montserrat',
 		h1: {
-			fontFamily: 'Montserrat',
+			// fontFamily: 'Montserrat',
 			color: 'white',
 			fontSize: '3rem',
 			letterSpacing: '0.7rem',
@@ -22,12 +23,13 @@ const theme = createTheme({
 function App() {
 	const [pokeData, setPokeData] = useState([]);
 	const getPokemon = async () => {
-		const original = 5;
+		const original = 151;
 		let pokemons = [];
 
 		for (let id = 1; id <= original; id++) {
 			let response = await axios.get(`https://pokeapi.co/api/v2/pokemon/${id}`);
 			let pokemon = response.data;
+			console.log(pokemon);
 
 			const pokemonType = pokemon.types
 				.map((poke) => poke.type.name)
