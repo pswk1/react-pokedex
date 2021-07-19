@@ -1,13 +1,21 @@
 import React from 'react';
-import { Grid, Typography } from '@material-ui/core';
+import {
+	Grid,
+	Typography,
+	Button,
+	TableContainer,
+	TableRow,
+	TableCell,
+} from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import PropTypes from 'prop-types';
 import { useTheme } from '@material-ui/core/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
+import Popover from '@material-ui/core/Popover';
 
 const useStyles = makeStyles({
 	card: {
-		height: '40%',
+		height: '50%',
 		background: '#444',
 		color: 'white',
 		borderRadius: '10px',
@@ -15,11 +23,9 @@ const useStyles = makeStyles({
 		boxShadow: '0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23)',
 		position: 'relative',
 		overflow: 'hidden',
-		cursor: 'pointer',
 		transition: ' 0.2s ease-in-out all',
 		marginBottom: '0.5rem',
 		'&:hover': {
-			transform: 'scale(1.02)',
 			borderRadius: '10px',
 			border: '1px solid white',
 		},
@@ -39,19 +45,31 @@ const useStyles = makeStyles({
 		textTransform: 'capitalize',
 	},
 	cardImage: {
-		width: '8rem',
 		display: 'block',
 		margin: 'auto',
 	},
 });
 
 const Card = ({ pokemon }) => {
-	console.log(pokemon);
-	const { id, name, image, type, abilities } = pokemon;
+	const { id, name, image, type, abilities, stats } = pokemon;
+	console.log(stats);
 
 	const classes = useStyles();
 	const theme = useTheme();
-	const mobile = useMediaQuery(theme.breakpoints.up('xs'));
+	const mobile = useMediaQuery(theme.breakpoints.down('xs'));
+
+	const [anchorEl, setAnchorEl] = React.useState(null);
+
+	const handleClick = (event) => {
+		setAnchorEl(event.currentTarget);
+	};
+
+	const handleClose = () => {
+		setAnchorEl(null);
+	};
+
+	const open = Boolean(anchorEl);
+
 	return (
 		<Grid
 			item
@@ -65,7 +83,7 @@ const Card = ({ pokemon }) => {
 			lg={3}
 			xl={2}
 			className={classes.card}
-			style={{ marginLeft: mobile ? '0.5rem' : '0rem' }}
+			style={{ marginLeft: mobile ? '0rem' : '0.5rem' }}
 		>
 			<Typography className={classes.cardId}>{id}</Typography>
 
@@ -76,17 +94,53 @@ const Card = ({ pokemon }) => {
 			</Grid>
 
 			<Grid item>
-				<img className={classes.cardImage} src={image} alt={name} />
+				<img style={{ width: !mobile && '8rem' }}className={classes.cardImage} src={image} alt={name} />
 			</Grid>
 			<Grid item>
-				<Typography gutterBottom className={classes.capitalize}>
+				<Typography gutterBottom={ mobile ? false : true} className={classes.capitalize}>
 					Type: {type}
 				</Typography>
 			</Grid>
-			<Grid item>
-				<Typography gutterBottom className={classes.capitalize}>
+			<Grid item 
+			style={{ marginBottom: '1rem'  }}
+			>
+				<Typography className={classes.capitalize}>
 					Abiliites: {abilities}
 				</Typography>
+			</Grid>
+
+			<Grid item>
+				<Button
+					aria-describedby={id}
+					variant='contained'
+					color='primary'
+					onClick={handleClick}
+				>
+					base stats
+				</Button>
+				<Popover
+					open={open}
+					anchorEl={anchorEl}
+					onClose={handleClose}
+					anchorOrigin={{
+						vertical: 'bottom',
+						horizontal: 'center',
+					}}
+					transformOrigin={{
+						vertical: 'top',
+						horizontal: 'center',
+					}}
+				>
+					<TableContainer>
+						{stats.map((stat) => (
+							<TableRow>
+								<TableCell className={classes.capitalize}>{stat.statName}:</TableCell>
+
+								<TableCell>{stat.baseStat}</TableCell>
+							</TableRow>
+						))}
+					</TableContainer>
+				</Popover>
 			</Grid>
 		</Grid>
 	);

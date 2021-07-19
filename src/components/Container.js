@@ -11,12 +11,6 @@ const useStyles = makeStyles({
 		background: '#6082B6',
         padding: '0.5rem'
 	},
-	header: {
-		fontSize: '3rem',
-		letterSpacing: '0.7rem',
-		textTransform: 'uppercase',
-		padding: '0.5rem',
-	},
 });
 
 const Container = ({ pokeData }) => {
