@@ -1,6 +1,22 @@
 import axios from 'axios';
 import React, { useState, useEffect } from 'react';
 import './App.css';
+import Container from './components/Container';
+import { Typography } from '@material-ui/core';
+import { MuiThemeProvider, createTheme } from '@material-ui/core/styles';
+
+const theme = createTheme({
+	typography: {
+		h1: {
+			fontFamily: 'Montserrat',
+			color: 'white',
+			fontSize: '3rem',
+			letterSpacing: '0.7rem',
+			textTransform: 'uppercase',
+			padding: '0.5rem',
+		},
+	},
+});
 
 function App() {
 	const [pokeData, setPokeData] = useState([]);
@@ -36,11 +52,14 @@ function App() {
 		getPokemon();
 	}, []);
 
-	if (pokeData.length) {
-		console.log(pokeData);
-	}
-
-	return <div className='App'>hello world</div>;
+	return (
+		<MuiThemeProvider theme={theme}>
+			<Typography align='center' variant='h1'>
+				Pokédex
+			</Typography>
+			<Container pokeData={pokeData} />
+		</MuiThemeProvider>
+	);
 }
 
 export default App;
