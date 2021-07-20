@@ -27,3 +27,4 @@ A sleek single-page application displaying the first 151 Pokemon and their relev
 
 ### In progress
 - Application requires more detailed tests
+- Implement pagination 
