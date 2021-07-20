@@ -52,7 +52,6 @@ const useStyles = makeStyles({
 
 const Card = ({ pokemon }) => {
 	const { id, name, image, type, abilities, stats } = pokemon;
-	console.log(stats);
 
 	const classes = useStyles();
 	const theme = useTheme();
@@ -88,7 +87,7 @@ const Card = ({ pokemon }) => {
 			<Typography className={classes.cardId}>{id}</Typography>
 
 			<Grid item>
-				<Typography className={classes.capitalize} variant='h4'>
+				<Typography data-cy={ id === 1 && "name"} id={name} className={classes.capitalize} variant='h4'>
 					{name}
 				</Typography>
 			</Grid>
@@ -97,14 +96,14 @@ const Card = ({ pokemon }) => {
 				<img style={{ width: !mobile && '8rem' }}className={classes.cardImage} src={image} alt={name} />
 			</Grid>
 			<Grid item>
-				<Typography gutterBottom={ mobile ? false : true} className={classes.capitalize}>
+				<Typography data-cy={ id === 1 && "types"}gutterBottom={ mobile ? false : true} className={classes.capitalize}>
 					Type: {type}
 				</Typography>
 			</Grid>
 			<Grid item 
 			style={{ marginBottom: '1rem'  }}
 			>
-				<Typography className={classes.capitalize}>
+				<Typography data-cy={ id === 1 && "abilities"}className={classes.capitalize}>
 					Abiliites: {abilities}
 				</Typography>
 			</Grid>
@@ -115,8 +114,9 @@ const Card = ({ pokemon }) => {
 					variant='contained'
 					color='primary'
 					onClick={handleClick}
+					data-cy={ id === 1 && "stats"}
 				>
-					base stats
+					{name}'s stats
 				</Button>
 				<Popover
 					open={open}

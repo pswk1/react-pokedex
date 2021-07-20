@@ -22,6 +22,7 @@ const Container = ({ pokeData }) => {
 			direction='row'
 			justifyContent='center'
 			alignItems='center'
+			data-cy='container'
 		>
             {pokeData && 
                 pokeData.map((poke) => (

@@ -33,7 +33,6 @@ function App() {
 		for (let id = 1; id <= original; id++) {
 			let response = await axios.get(`https://pokeapi.co/api/v2/pokemon/${id}`);
 			let pokemon = response.data;
-			// console.log(pokemon);
 
 			const pokemonType = pokemon.types
 				.map((poke) => poke.type.name)
