@@ -3,6 +3,9 @@
 ## Description
 A sleek single-page application displaying the first 151 Pokemon and their relevant stats and data. React, HTML5, Javascript, CSS, and Material-UI.
 
+## Deploy
+[Deployed App](https://pk-react-pokedex.netlify.app/)
+
 ## Features
 - Sleek UI design styled by CSS and Material-UI's styling Hook API and Theming
 - Responsive across screenwidths
