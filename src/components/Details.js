@@ -78,7 +78,6 @@ const Details = ({ location }) => {
 				<Grid
 					style={{
 						borderRight: mobile ? 0 : '1px solid white',
-						borderTop: mobile ? '1px solid white' : 0,
 					}}
 					item
 					xs={12}
@@ -170,7 +169,9 @@ const Details = ({ location }) => {
 					</Grid>
 				</Grid>
 
-				<Grid item container direction='column' xs={12} sm={8}>
+				<Grid style={{
+							borderRight: mobile && '1px solid white'
+						}} item container direction='column' xs={12} sm={8}>
 					<Typography
 						variant='body1'
 						align='center'
