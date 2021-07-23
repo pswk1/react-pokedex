@@ -3,26 +3,11 @@ import React, { useState, useEffect } from 'react';
 import './App.css';
 import Container from './components/Container';
 import { Grid, Typography } from '@material-ui/core';
-import { MuiThemeProvider, createTheme } from '@material-ui/core/styles';
+import { MuiThemeProvider } from '@material-ui/core/styles';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import CircularProgress from '@material-ui/core/CircularProgress';
-
-const theme = createTheme({
-	palette: {
-		primary: { main: '#6082B6' },
-	},
-	spacing: 8,
-	typography: {
-		fontFamily: 'Montserrat',
-		h1: {
-			// fontFamily: 'Montserrat',
-			color: 'white',
-			fontSize: '3rem',
-			letterSpacing: '0.7rem',
-			textTransform: 'uppercase',
-			padding: '0.5rem',
-		},
-	},
-});
+import Details from './components/Details';
+import { theme } from './theme/muiTheme';
 
 function App() {
 	const [pokeData, setPokeData] = useState([]);
@@ -44,14 +29,24 @@ function App() {
 				statName: data.stat.name,
 				baseStat: data.base_stat,
 			}));
+			const moves = pokemon.moves.slice(0, 5);
+
+			const spriteData = Object.entries(pokemon.sprites);
+			const notNull = spriteData.filter(([key, value]) => value !== null);
+			const sprites = Object.fromEntries(notNull);
 
 			const transformedPokemon = {
 				id: pokemon.id,
 				name: pokemon.name,
-				image: `${pokemon.sprites.front_default}`,
+				image: `${pokemon.sprites.versions['generation-vii']['ultra-sun-ultra-moon'].front_default}`,
 				type: pokemonType,
 				abilities: pokemonAbilities,
 				stats: pokemonStats,
+				moves,
+				sprites,
+				items: pokemon.held_items,
+				height: pokemon.height,
+				weight: pokemon.weight,
 			};
 
 			pokemons.push(transformedPokemon);
@@ -68,23 +63,37 @@ function App() {
 			<Typography align='center' variant='h1'>
 				Pokédex
 			</Typography>
-			<Grid
-				container
-				direction='column'
-				justifyContent='center'
-				alignItems='center'
-			>
-				{pokeData.length < 151 ? (
-					<Grid item>
-						<CircularProgress
-							size='10rem'
-							style={{ marginTop: '4rem', color: 'white' }}
-						/>
-					</Grid>
-				) : (
-					<Container pokeData={pokeData} />
-				)}
-			</Grid>
+			<Router>
+				<Switch>
+					<Route
+						exact
+						path='/details/:id'
+						render={(props) => <Details {...props} />}
+					/>
+
+					<Route exact path='/'>
+						<Grid
+							container
+							direction='column'
+							justifyContent='center'
+							alignItems='center'
+						>
+							{
+							pokeData.length < 151 
+							? (
+								<Grid item>
+									<CircularProgress
+										size='10rem'
+										style={{ marginTop: '4rem', color: 'white' }}
+									/>
+								</Grid>
+							) : (
+								<Container pokeData={pokeData} />
+							)}
+						</Grid>
+					</Route>
+				</Switch>
+			</Router>
 		</MuiThemeProvider>
 	);
 }

@@ -3,15 +3,12 @@ import {
 	Grid,
 	Typography,
 	Button,
-	TableContainer,
-	TableRow,
-	TableCell,
 } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import PropTypes from 'prop-types';
 import { useTheme } from '@material-ui/core/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
-import Popover from '@material-ui/core/Popover';
+import { Link } from 'react-router-dom';
 
 const useStyles = makeStyles({
 	card: {
@@ -51,23 +48,11 @@ const useStyles = makeStyles({
 });
 
 const Card = ({ pokemon }) => {
-	const { id, name, image, type, abilities, stats } = pokemon;
+	const { id, name, image, type, abilities } = pokemon;
 
 	const classes = useStyles();
 	const theme = useTheme();
 	const mobile = useMediaQuery(theme.breakpoints.down('xs'));
-
-	const [anchorEl, setAnchorEl] = React.useState(null);
-
-	const handleClick = (event) => {
-		setAnchorEl(event.currentTarget);
-	};
-
-	const handleClose = () => {
-		setAnchorEl(null);
-	};
-
-	const open = Boolean(anchorEl);
 
 	return (
 		<Grid
@@ -113,34 +98,17 @@ const Card = ({ pokemon }) => {
 					aria-describedby={id}
 					variant='contained'
 					color='primary'
-					onClick={handleClick}
 					data-cy={ id === 1 && "stats"}
+					component={Link}
+					to={{
+						pathname: `/details/${id}`,
+						state: {
+							pokemonData: pokemon
+						},
+					}}
 				>
-					{name}'s stats
+					More Info
 				</Button>
-				<Popover
-					open={open}
-					anchorEl={anchorEl}
-					onClose={handleClose}
-					anchorOrigin={{
-						vertical: 'bottom',
-						horizontal: 'center',
-					}}
-					transformOrigin={{
-						vertical: 'top',
-						horizontal: 'center',
-					}}
-				>
-					<TableContainer>
-						{stats.map((stat) => (
-							<TableRow>
-								<TableCell className={classes.capitalize}>{stat.statName}:</TableCell>
-
-								<TableCell>{stat.baseStat}</TableCell>
-							</TableRow>
-						))}
-					</TableContainer>
-				</Popover>
 			</Grid>
 		</Grid>
 	);
