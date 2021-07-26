@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { Grid } from '@material-ui/core';
+import { Grid, Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import Card from './Card';
 import Pagination from '@material-ui/lab/Pagination';
+import { Link } from 'react-router-dom';
 
 const useStyles = makeStyles({
 	container: {
@@ -20,6 +21,10 @@ const useStyles = makeStyles({
 	paginationContainer: {
 		marginBottom: '2rem',
 	},
+	footer: {
+		marginBottom: '2rem',
+		marginTop: '2rem'
+	}
 });
 
 const Container = ({ pokeData }) => {
@@ -31,6 +36,8 @@ const Container = ({ pokeData }) => {
 	const handlePageChange = (event, value) => {
 		setPage(value);
 	};
+
+	const setYear = () => new Date().getFullYear();
 
 	return (
 		<Grid
@@ -68,19 +75,24 @@ const Container = ({ pokeData }) => {
 				pokeData
 					.slice((page - 1) * pokemonPerPage, page * pokemonPerPage)
 					.map((poke) => <Card pokemon={poke} />)}
-			{/* <span> */}
-			{/* <Pagination
-					count={numberOfPages}
-					page={page}
-					onChange={handlePageChange}
-					defaultPage={1}
-					// color='primary'
-					// size='large'
-					showFirstButton
-					showLastButton
-					// classes={{ ul: classes.paginator }}
-				/> */}
-			{/* </span> */}
+			<Grid
+				className={classes.footer}
+				item
+				container
+				direction='row'
+				justifyContent='center'
+				alignItems='center'
+				xs={12}
+			>
+				<Typography variant='body1'>
+					Developed by {' '}
+					<Link color='inherit' href='https://github.com/pswk1'>
+					Peter Kang 
+					</Link>
+					{' '}
+					{setYear()}
+				</Typography>
+			</Grid>
 		</Grid>
 	);
 };
