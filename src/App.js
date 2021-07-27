@@ -79,7 +79,7 @@ function App() {
 							alignItems='center'
 						>
 							{
-							pokeData.length < 151 
+							pokeData.length < 20 
 							? (
 								<Grid item>
 									<CircularProgress
