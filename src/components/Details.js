@@ -124,7 +124,9 @@ const Details = ({ location }) => {
 				<Grid
 					item
 					container
-					direction='column'
+					direction="column"
+					justifyContent="center"
+					alignItems="flex-start"
 					style={{ borderRight: '1px solid white' }}
 					xs={12}
 					sm={4}
