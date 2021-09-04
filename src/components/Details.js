@@ -146,7 +146,6 @@ const Details = ({ location }) => {
 						Abilities: {abilities}
 					</Typography>
 
-					<Grid style={{ borderTop: '1px solid white' }} item container xs={12}>
 						<Typography
 							variant='body1'
 							align='left'
@@ -168,7 +167,7 @@ const Details = ({ location }) => {
 								</TableRow>
 							))}
 						</Table>
-					</Grid>
+					
 				</Grid>
 
 				<Grid style={{
