@@ -20,12 +20,15 @@ A sleek single-page application displaying the first 151 Pokemon and their relev
 - React
 - React Hooks
 - Material-UI
+- Jest for testing
 
 ## Installation and Usage
 - Clone this repository into your machine.
 - Navigate to the root directory of the repo.
 - Run ```npm install``` to install dependencies.
 - Run ```npm start``` to start the application.
+- Run ```npm run test``` to run tests OR
+- Run ```npm run test:watch``` to run tests in watch mode
 
 ### In progress
 - Application requires more detailed tests
