@@ -47,6 +47,8 @@ const useStyles = makeStyles({
 	},
 });
 
+const defaultImg = 'https://i.imgur.com/eber7r8.jpeg';
+
 const Card = ({ pokemon }) => {
 	const { id, name, image, type, abilities } = pokemon;
 
@@ -78,7 +80,7 @@ const Card = ({ pokemon }) => {
 			</Grid>
 
 			<Grid item>
-				<img style={{ width: !mobile && '8rem' }}className={classes.cardImage} src={image} alt={name} />
+				<img data-testid="card-image" style={{ width: !mobile && '8rem' }}className={classes.cardImage} src={image ? image : defaultImg} alt={name} />
 			</Grid>
 			<Grid item>
 				<Typography data-cy={ id === 1 && "types"}gutterBottom={ mobile ? false : true} className={classes.capitalize}>
