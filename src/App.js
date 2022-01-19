@@ -13,43 +13,50 @@ function App() {
 	const [pokeData, setPokeData] = useState([]);
 	const getPokemon = async () => {
 		const original = 151;
+		let promises = [];
+		for (let id = 1; id <= original; id++) {
+			promises.push(axios.get(`https://pokeapi.co/api/v2/pokemon/${id}`));
+		}
+		const results = await Promise.allSettled(promises);
 		let pokemons = [];
 
-		for (let id = 1; id <= original; id++) {
-			let response = await axios.get(`https://pokeapi.co/api/v2/pokemon/${id}`);
-			let pokemon = response.data;
+		for (const result of results) {
+			if (result.status === 'fulfilled') {
+				const pokemon = result.value.data;
+				const pokemonType = pokemon.types
+					.map((poke) => poke.type.name)
+					.join(', ');
+				const pokemonAbilities = pokemon.abilities
+					.map((poke) => poke.ability.name)
+					.join(', ');
+				const pokemonStats = pokemon.stats.map((data) => ({
+					statName: data.stat.name,
+					baseStat: data.base_stat,
+				}));
+				const moves = pokemon.moves.slice(0, 5);
 
-			const pokemonType = pokemon.types
-				.map((poke) => poke.type.name)
-				.join(', ');
-			const pokemonAbilities = pokemon.abilities
-				.map((poke) => poke.ability.name)
-				.join(', ');
-			const pokemonStats = pokemon.stats.map((data) => ({
-				statName: data.stat.name,
-				baseStat: data.base_stat,
-			}));
-			const moves = pokemon.moves.slice(0, 5);
+				const spriteData = Object.entries(pokemon.sprites);
+				const notNull = spriteData.filter(([key, value]) => value !== null);
+				const sprites = Object.fromEntries(notNull);
 
-			const spriteData = Object.entries(pokemon.sprites);
-			const notNull = spriteData.filter(([key, value]) => value !== null);
-			const sprites = Object.fromEntries(notNull);
+				const transformedPokemon = {
+					id: pokemon.id,
+					name: pokemon.name,
+					image: `${pokemon.sprites.versions['generation-vii']['ultra-sun-ultra-moon'].front_default}`,
+					type: pokemonType,
+					abilities: pokemonAbilities,
+					stats: pokemonStats,
+					moves,
+					sprites,
+					items: pokemon.held_items,
+					height: pokemon.height,
+					weight: pokemon.weight,
+				};
 
-			const transformedPokemon = {
-				id: pokemon.id,
-				name: pokemon.name,
-				image: `${pokemon.sprites.versions['generation-vii']['ultra-sun-ultra-moon'].front_default}`,
-				type: pokemonType,
-				abilities: pokemonAbilities,
-				stats: pokemonStats,
-				moves,
-				sprites,
-				items: pokemon.held_items,
-				height: pokemon.height,
-				weight: pokemon.weight,
-			};
-
-			pokemons.push(transformedPokemon);
+				pokemons.push(transformedPokemon);
+			} else {
+				console.log(result.reason);
+			}
 		}
 		setPokeData(pokemons);
 	};
