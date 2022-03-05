@@ -6,6 +6,9 @@ A sleek single-page application displaying the first 151 Pokemon and their relev
 ## Demo
 <img src='/demo/React Pokédex.gif' alt='react pokedex project demo gif'>
 
+## Tests
+[Tests](https://github.com/pswk1/react-pokedex/tree/master/src/__tests__)
+
 ## Deploy
 [Deployed App](https://pk-react-pokedex.netlify.app/)
 
