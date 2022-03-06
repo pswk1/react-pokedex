@@ -4,7 +4,6 @@ import { Grid, Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import Card from './Card';
 import Pagination from '@material-ui/lab/Pagination';
-import { Link } from 'react-router-dom';
 
 const useStyles = makeStyles({
 	container: {
@@ -74,7 +73,7 @@ const Container = ({ pokeData }) => {
 			{pokeData &&
 				pokeData
 					.slice((page - 1) * pokemonPerPage, page * pokemonPerPage)
-					.map((poke) => <Card pokemon={poke} />)}
+					.map((poke) => <Card key={poke.id} pokemon={poke} />)}
 			<Grid
 				className={classes.footer}
 				item
@@ -86,9 +85,9 @@ const Container = ({ pokeData }) => {
 			>
 				<Typography variant='body1'>
 					Developed by {' '}
-					<Link color='inherit' href='https://github.com/pswk1'>
+					<a color='inherit' href='https://github.com/pswk1'>
 					Peter Kang 
-					</Link>
+					</a>
 					{' '}
 					{setYear()}
 				</Typography>
