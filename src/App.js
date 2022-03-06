@@ -36,8 +36,11 @@ function App() {
 				const moves = pokemon.moves.slice(0, 5);
 
 				const spriteData = Object.entries(pokemon.sprites);
-				const notNull = spriteData.filter(([key, value]) => value !== null);
-				const sprites = Object.fromEntries(notNull);
+				// filter out any alternate sprites that are not available. 
+				// future: refactor this to have a fallback sprite instead
+				// case: if sprite is null, use a locally saved sprite image to render instead
+				const validSprites = spriteData.filter(([key, value]) => value !== null);
+				const sprites = Object.fromEntries(validSprites);
 
 				const transformedPokemon = {
 					id: pokemon.id,
